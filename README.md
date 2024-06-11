@@ -139,7 +139,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ### Contributing
 
-Fork the repository:
+- Fork the repository:
 
 1. Click the "Fork" button at the top right of this page.
 
@@ -161,13 +161,14 @@ git checkout -b feature/shubhaygautam
 
 ## Output Screenshots
 - Main Page
-   ![image](https://github.com/shubhaygautam/Nexus---A-Community-Detection-Platform/assets/111029251/db7584eb-ce55-4de2-ba37-20f6ed79880e)
+ ![image](https://github.com/shubhaygautam/Nexus---A-Community-Detection-Platform/assets/111029251/db7584eb-ce55-4de2-ba37-20f6ed79880e)
+
 
 
  
 - Selecting an algorithm:
-
 ![image](https://github.com/shubhaygautam/Nexus---A-Community-Detection-Platform/assets/111029251/e1218892-f7ea-4129-858e-195b268427c2)
+
 
 
 - Time taken by the algorithm:
