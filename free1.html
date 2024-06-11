@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Detection</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            text-align: center;
+            padding-top: 20px;
+            margin: 0; 
+            overflow-y: auto; 
+        }
+
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(to right, #64ffd6, #ff4d8e, #3d61ff, #7a08fa, #2d8bf6, #009688, #4caf50, #ffc107,#ff0080, #7a08fa, #2d8bf6, #ffec60, #4caf50, #ffc107,#ff8a00, #da1b60, #ff0080, #7a08fa, #2d8bf6, #009688, #4caf50, #ffc107,#ff0080, #7a08fa, #2d8bf6, #009688, #4caf50, #ffc107);
+            background-size: 800% 100%;
+            animation: moveBackground 100s linear infinite;
+        }
+
+        @keyframes moveBackground {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 100% 0;
+            }
+        }
+
+
+        header {
+            background-color: #f08080; 
+            color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .graph-container {
+            max-height: 0;
+            width: 100%;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            visibility: hidden;
+        }
+
+        .expanded {
+            max-height: 2000px;
+            visibility: visible;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        input[type="number"],
+        select,
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .submit-button {
+            background-color: #f08080;
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s;
+        }
+
+        .submit-button:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .table-responsive {
+            margin-top: 20px;
+        }
+
+        .image-container {
+            margin-top: 50px;
+        }
+
+        img {
+            transition: transform 0.3s;
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        img:hover {
+            transform: scale(1.05);
+        }
+
+        .table-button,
+        .table-container {
+            background-color: #fff; 
+            margin-bottom: 20px; 
+            padding: 20px; 
+            border-radius: 8px; 
+        }
+
+        .table-button {
+            background-color: #f08080; 
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            width: 80%;
+        }
+
+        .table-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 1.5s ease;
+            visibility: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f08080; 
+            color: #fff;
+        }
+
+        .table-container.expanded {
+            max-height: 5000px;
+            visibility: visible;
+        }
+
+        .button-container {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            width: 80%;
+        }
+
+        .big-bold-aesthetic-text {
+        font-size: 50px;
+        font-weight: bold;
+        font-family: 'Arial', sans-serif; 
+        color: #333;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+   
+}
+    </style>
+</head>
+
+<body>
+    
+    <header>
+        <h1 class="big-bold-aesthetic-text">Nexus: A Community Detection Platform</h1>
+    </header>
+
+    <div class="animated-background"></div>
+
+    <div class="container">
+        <form action="/process" method="POST" enctype="multipart/form-data">
+            <label for="required-influencers">Required Influencers:</label>
+            <input type="number" id="required-influencers" name="required-influencers" min="3" max="15" required>
+
+            <label for="algorithmSelect">Select Algorithm</label>
+            <select id="algorithmSelect" name="algorithmSelect" class="form-control">
+                <option value="selectAlgo">Select Algorithm</option>
+                <option value="Louvain">Louvain</option>
+                <option value="labelpropgation">Label propogation</option>
+                <option value="Maxmin">Max Min</option>
+                <option value="Bee">Artificial Bee Colony (Recommended)</option>
+            </select>
+            <label for="commSelect">Select community sorting</label>
+            <select id="commSelect" name="commSelect" class="form-control">
+                <option value="selectsort">Select</option>
+                <option value="density">Density</option>
+                <option value="size">Size</option>
+            </select>
+            <label for="csv-file">Provide your dataset (CSV only)</label>
+            <input type="file" id="csv-file" name="csv-file" accept=".csv" >
+            <p id="file-error" style="color: red; display: none;">Please provide a CSV file.</p>
+
+
+            <button type="submit" class="submit-button">Submit</button>
+        </form>
+    </div>
+    <br>
+
+    {% if time %}
+    <div class="container">
+        <h2>This algorithm took {{ time[0] }} seconds</h2>
+    </div>
+    {% endif %}
+
+    <br>
+    {% if graph | safe %}
+    <div class="container">
+        <button class="submit-button" onclick="toggleGraphs()">Show Graphs</button>
+    </div>
+
+    <div class="container graph-container" id="graphs-container">
+        {% if graph | safe %}
+        <div class="container">
+            <h2>Your Total Graph is visualized as!</h2>
+            <img src="{{ graph }}" alt="Visualized Graph">
+        </div>
+        {% endif %}
+
+        <br>
+        {% if graph2 | safe %}
+        <div class="container">
+            <h2>Your Total Graph with communities!</h2>
+            <img src="{{ graph2 }}" alt="Visualized Graph">
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if community_dict %}
+    <div class="container button-container">
+        <button class="submit-button table-button" onclick="toggleTable()">Communities and their Nodes</button>
+    </div>
+
+    <div class="container table-container">
+        <h2>Communities and their nodes</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Community ID</th>
+                        <th>Nodes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for com_id, nodes in community_dict.items() %}
+                    <tr>
+                        <td>{{ com_id }}</td>
+                        <td>{{ nodes }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="container button-container">
+        <button class="submit-button table-button" onclick="toggleTable2()">Communities having Seed Nodes and influenced
+            nodes</button>
+    </div>
+
+    <div class="container table-container" id="table2">
+        <h2>Communities, seed nodes and influenced nodes</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Community ID</th>
+                        <th>Seed Nodes</th>
+                        <th>Influenced Nodes</th>
+                    </tr>
+                </thead>
+                
+            </table>
+        </div>
+    </div>
+    {% endif %}
+    <br>
+
+    {% if image_paths %}
+    <div class="container image-container" id="images-container"> 
+        <h2>Visualize all communities with seed nodes</h2>
+        {% for image_path in image_paths %}
+        <img src="{{ image_path }}" alt="Community Image">
+        {% endfor %}
+    </div>
+    
+    {% endif %}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+          
+            $('#popup1').modal('show');
+    
+            
+            $('#popup1').on('hidden.bs.modal', function () {
+                $('#popup2').modal('show');
+            });
+    
+           
+            $('#popup2').on('hidden.bs.modal', function () {
+                $('#popup3').modal('show');
+            });
+        });
+    </script>
+    
+    <script>
+        function toggleTable() {
+            var tableContainer = document.querySelector('.table-container');
+            tableContainer.classList.toggle('expanded');
+        }
+
+        function toggleTable2() {
+            var tableContainer = document.getElementById('table2');
+            tableContainer.classList.toggle('expanded');
+        }
+
+        function toggleGraphs() {
+            var graphsContainer = document.getElementById('graphs-container');
+            graphsContainer.classList.toggle('expanded');
+        }
+    </script>
+
+</body>
+
+</html>
