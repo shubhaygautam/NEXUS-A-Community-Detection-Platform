@@ -167,29 +167,33 @@ git checkout -b feature/shubhaygautam
 
  
 - Selecting an algorithm:
-![image](https://github.com/shubhaygautam/Nexus---A-Community-Detection-Platform/assets/111029251/e1218892-f7ea-4129-858e-195b268427c2)
+  ![image](https://github.com/shubhaygautam/NEXUS-A-Community-Detection-Platform/assets/111029251/01a15de1-853a-4893-8dc0-da9f20b9ac30)
+
 
 
 
 - Time taken by the algorithm:
 
-![image](https://github.com/shubhaygautam/Nexus---A-Community-Detection-Platform/assets/111029251/950a98ce-6a3a-48fa-87db-30d77cae7538)
+  ![image](https://github.com/shubhaygautam/NEXUS-A-Community-Detection-Platform/assets/111029251/00f1b504-4e9e-4d36-9b06-b8a22c601471)
+
 
 
 - Visualized Graph with communities:
   
-![image](https://github.com/shubhaygautam/Nexus---A-Community-Detection-Platform/assets/111029251/792eae43-1b77-44bd-b19c-8f4b4f468cfe)
+  ![image](https://github.com/shubhaygautam/NEXUS-A-Community-Detection-Platform/assets/111029251/2cb21cc6-2430-4a0a-bfaf-4882829f1ddb)
+
 
 
 - Connection Table:
 
-![image](https://github.com/shubhaygautam/Nexus---A-Community-Detection-Platform/assets/111029251/9ce35072-20a0-44e6-a90a-9c510dfe7afa)
+  ![image](https://github.com/shubhaygautam/NEXUS-A-Community-Detection-Platform/assets/111029251/647c864b-2dc6-41c7-a267-84d9e152d6cf)
 
 
 
 - Visualize all communities with seed nodes:
  
-![image](https://github.com/shubhaygautam/Nexus---A-Community-Detection-Platform/assets/111029251/dbf15a48-abf4-40ef-8733-914c8ba794a8)
+  ![image](https://github.com/shubhaygautam/NEXUS-A-Community-Detection-Platform/assets/111029251/1d8c7775-0b7e-49e7-97b8-eaac19e19f28)
+
 
 
 
